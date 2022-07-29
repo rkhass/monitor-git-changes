@@ -21,4 +21,5 @@ MONITOR_SCRIPT = Users/username/github/monitor-git-changes/main.py
 # 9,13,17 - means running 3 times at 9, 13, 17 o'clock
 0 9,13,17 * * * $PY_ENV $MONITOR_SCRIPT
 ```
-5. Enjoy!
+5. Copy cron file and past to `crontab -e`
+6. Enjoy!
