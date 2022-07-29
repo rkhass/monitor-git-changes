@@ -49,7 +49,15 @@ def send_text_to_chat(text: str) -> None:
     :param text: input text
     """
     bot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
-    bot.send_message(chat_id=os.getenv("TELEGRAM_CHAT_ID"), text=text)
+    bot.send_message(chat_id=os.getenv("TELEGRAM_CHAT_ID"), text=text, parse_mode=telegram.ParseMode.HTML)
+
+
+def get_location_title() -> str:
+    """Returns location title."""
+    name = os.getenv("LOCATION_NAME")
+    if name != "":
+        name = f"<b>Location: {name}</b>\n\n"
+    return name
 
 
 if __name__ == "__main__":
@@ -60,7 +68,9 @@ if __name__ == "__main__":
 
             changed_files = get_changed_files(repo)
             untracked_files = get_untracked_files(repo)
+
+            title = get_location_title()
             report_text = format_text_to_print(lst1=changed_files, lst2=untracked_files)
-            send_text_to_chat(text=report_text)
+            send_text_to_chat(text=title + report_text)
     except Exception as e:
         send_text_to_chat(text=f"Something went wrong...\n Error\n {e}")
