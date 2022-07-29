@@ -56,8 +56,15 @@ def get_location_title() -> str:
     """Returns location title."""
     name = os.getenv("LOCATION_NAME")
     if name != "":
-        name = f"<b>Location: {name}</b>\n\n"
+        name = f"<b>Location: {name}</b>\n"
     return name
+
+
+def get_repo_name(repo: Repo):
+    """Returns formatted repo name."""
+    name = repo.working_dir.split("/")[-1]
+    repo_name_fmt = f"<b>Repo:</b> {name}\n\n"
+    return repo_name_fmt
 
 
 if __name__ == "__main__":
@@ -65,12 +72,13 @@ if __name__ == "__main__":
         repo_paths = os.getenv("PATH_TO_REPO").replace(" ", "").split(",")
         for repo_path in repo_paths:
             repo = Repo(path=repo_path)
+            repo_name = get_repo_name(repo)
 
             changed_files = get_changed_files(repo)
             untracked_files = get_untracked_files(repo)
 
-            title = get_location_title()
+            header = get_location_title() + get_repo_name(repo)
             report_text = format_text_to_print(lst1=changed_files, lst2=untracked_files)
-            send_text_to_chat(text=title + report_text)
+            send_text_to_chat(text=header + report_text)
     except Exception as e:
         send_text_to_chat(text=f"Something went wrong...\n Error\n {e}")
