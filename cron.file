@@ -1,0 +1,4 @@
+PY_ENV = py38/bin/python3.8
+MONITOR_SCRIPT = Users/rasul/work/github/monitor-git-changes/main.py
+
+0 9,13,17 * * * $PY_ENV $MONITOR_SCRIPT
