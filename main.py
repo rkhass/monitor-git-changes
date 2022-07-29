@@ -69,7 +69,7 @@ def get_repo_name(repo: Repo):
 
 if __name__ == "__main__":
     try:
-        repo_paths = os.getenv("PATH_TO_REPO").replace(" ", "").split(",")
+        repo_paths = os.getenv("REPOS_TO_MONITOR").replace(" ", "").split(",")
         for repo_path in repo_paths:
             repo = Repo(path=repo_path)
             repo_name = get_repo_name(repo)

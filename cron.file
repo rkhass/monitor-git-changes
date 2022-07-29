@@ -1,4 +1,4 @@
 PY_ENV =
-MONITOR_SCRIPT =
+MONITOR_REPO =
 
-0 9,13,17 * * * $PY_ENV $MONITOR_SCRIPT
+0 9,13,17 * * * cd $MONITOR_REPO && $PY_ENV main.py >> ~/log_monitor 2>&1
