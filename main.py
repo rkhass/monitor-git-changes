@@ -2,7 +2,7 @@
 import os
 from typing import List
 
-import telegram_send
+import telegram
 from dotenv import load_dotenv
 from git import Repo
 
@@ -43,6 +43,15 @@ def format_bullet_list(lst: List[str]) -> str:
     return text
 
 
+def send_text_to_chat(text: str) -> None:
+    """Sends text to the chat.
+
+    :param text: input text
+    """
+    bot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
+    bot.send_message(chat_id=os.getenv("TELEGRAM_CHAT_ID"), text=text)
+
+
 if __name__ == "__main__":
     try:
         repo_paths = os.getenv("PATH_TO_REPO").replace(" ", "").split(",")
@@ -52,6 +61,6 @@ if __name__ == "__main__":
             changed_files = get_changed_files(repo)
             untracked_files = get_untracked_files(repo)
             report_text = format_text_to_print(lst1=changed_files, lst2=untracked_files)
-            telegram_send.send(messages=[report_text])
+            send_text_to_chat(text=report_text)
     except Exception as e:
-        telegram_send.send(messages=["Something went wrong...", "Error", str(e)])
+        send_text_to_chat(text=f"Something went wrong...\n Error\n {e}")

@@ -7,6 +7,11 @@ Tool to monitor uncommitted changes or unfinished work in repo to keep it always
 pip instal -r requirements.txt
 ```
 2. Set up the telegram bot
+   1. Generate a token https://t.me/BotFather (`TELEGRAM_TOKEN`)
+   2. Add this bot to a chat you want and open 
+   https://api.telegram.org/bot<YourBOTToken>/getUpdates, 
+   where you can find chat id (`TELEGRAM_CHAT_ID`)
+   3. Put `TELEGRAM_TOKEN` and `TELEGRAM_CHAT_ID` numbers to `.env` file 
 3. List repositories in `.env` file
 ```text
 PATH_TO_REPO = PathToRepo1, PathToRepo2 
