@@ -48,8 +48,13 @@ def send_text_to_chat(text: str) -> None:
 
     :param text: input text
     """
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
     bot = telegram.Bot(os.getenv("TELEGRAM_TOKEN"))
-    bot.send_message(chat_id=os.getenv("TELEGRAM_CHAT_ID"), text=text, parse_mode=telegram.ParseMode.HTML)
+
+    for pos in range(0, len(text), 4096):
+        bot.send_message(
+            chat_id, text[pos : pos + 4096], parse_mode=telegram.ParseMode.HTML
+        )
 
 
 def get_location_title() -> str:
